@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Weather Dashboard</h1>
+        
+        <!-- Search Section -->
+        <div class="max-w-md mx-auto mb-8">
+            <input type="text" id="searchCity" placeholder="Enter city name" 
+                class="w-full p-2 border rounded-lg shadow-sm">
+            <button onclick="searchWeather()" 
+                class="mt-2 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+                Search
+            </button>
+        </div>
+
+        <!-- Current Weather -->
+        <div id="currentWeather" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-xl font-semibold mb-4">Current Weather</h2>
+            <p id="location">Location: --</p>
+            <p id="temperature">Temperature: --°C</p>
+            <p id="description">Description: --</p>
+            <p id="humidity">Humidity: --%</p>
+        </div>
+
+        <!-- 5-Day Forecast -->
+        <div id="forecast" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <!-- Forecast cards will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = '15b0379e6ce14769b6230250251606';
+
+        window.onload = function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    getWeatherByCoords(position.coords.latitude, position.coords.longitude);
+                });
+            }
+        };
+
+        async function searchWeather() {
+            const city = document.getElementById('searchCity').value;
+            const response = await fetch(
+                `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`
+            );
+            const data = await response.json();
+            displayCurrentWeather(data);
+            getForecast(city);
+        }
+
+        async function getWeatherByCoords(lat, lon) {
+            const response = await fetch(
+                `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${lat},${lon}&aqi=no`
+            );
+            const data = await response.json();
+            displayCurrentWeather(data);
+            getForecast(`${lat},${lon}`);
+        }
+
+        function displayCurrentWeather(data) {
+            document.getElementById('location').textContent = `Location: ${data.location.name}`;
+            document.getElementById('temperature').textContent = 
+                `Temperature: ${Math.round(data.current.temp_c)}°C`;
+            document.getElementById('description').textContent = 
+                `Description: ${data.current.condition.text}`;
+            document.getElementById('humidity').textContent = 
+                `Humidity: ${data.current.humidity}%`;
+        }
+
+        async function getForecast(query) {
+            const response = await fetch(
+                `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${query}&days=5&aqi=no`
+            );
+            const data = await response.json();
+            displayForecast(data.forecast.forecastday);
+        }
+
+        function displayForecast(forecastData) {
+            const forecastDiv = document.getElementById('forecast');
+            forecastDiv.innerHTML = '';
+            
+            forecastData.forEach(forecast => {
+                const date = new Date(forecast.date);
+                const card = document.createElement('div');
+                card.className = 'bg-white p-4 rounded-lg shadow-md';
+                card.innerHTML = `
+                    <p class="font-semibold">${date.toLocaleDateString()}</p>
+                    <p>${Math.round(forecast.day.avgtemp_c)}°C</p>
+                    <p>${forecast.day.condition.text}</p>
+                `;
+                forecastDiv.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
