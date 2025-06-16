@@ -37,15 +37,7 @@
 
     <script>
         const API_KEY = '15b0379e6ce14769b6230250251606';
-
-        window.onload = function() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(position => {
-                    getWeatherByCoords(position.coords.latitude, position.coords.longitude);
-                });
-            }
-        };
-
+        
         async function searchWeather() {
             const city = document.getElementById('searchCity').value;
             const response = await fetch(
