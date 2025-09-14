@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'accent': '#2563eb',
+            'light': '#f0f9ff',
+            'harvard': '#A51C30'
+          },
+          fontFamily: {
+            'sans': ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .section-title {
+      position: relative;
+      padding-left: 1.25rem;
+    }
+    .section-title:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 1.25rem;
+      width: 4px;
+      background: #2563eb;
+    }
+    .harvard-badge {
+      background: #f8f0f0;
+      border: 1px solid #e0c4c4;
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 0.8rem;
+      color: #A51C30;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans">
+   <!-- Projects -->
+    <section class="mt-8">
+      <h2 class="section-title text-xl font-semibold text-gray-800">Academic/Personal Projects</h2>
+      <div class="mt-4 space-y-6">
+        <!-- Project 1: Study Tracker -->
+        <div>
+          <h3 class="font-medium text-gray-800">Study Tracker</h3>
+          <p class="text-gray-600">HTML, Tailwind CSS, JavaScript, LocalStorage</p>
+          <ul class="mt-2 space-y-1 pl-5 list-disc text-gray-600 text-sm">
+            <li>Created productivity tool to track study sessions and subjects</li>
+            <li>Used browser storage for persistent data saving</li>
+          </ul>
+          <div class="mt-2 flex gap-4">
+            <a href="https://github.com/hrish-hub/Resume/blob/main/studytracker.html" class="text-accent hover:underline text-sm">
+              GitHub
+            </a>
+            <a href="https://hrishabh.pages.dev/studytracker.html" class="text-accent hover:underline text-sm">
+              Live Demo
+            </a>
+          </div>
+        </div>
+        
+        <!-- Project 2: Weather Web App -->
+        <div>
+          <h3 class="font-medium text-gray-800">Weather Forecast Website</h3>
+          <p class="text-gray-600">HTML, CSS, JavaScript, WeatherAPI</p>
+          <ul class="mt-2 space-y-1 pl-5 list-disc text-gray-600 text-sm">
+            <li>Built responsive weather dashboard using OpenWeather API</li>
+            <li>Implemented geolocation for automatic weather detection</li>
+            <li>Added 5-day forecast and weather details visualization</li>
+            <li>Integrated search functionality for global weather lookup</li>
+          </ul>
+          <div class="mt-2 flex gap-4">
+            <a href="https://github.com/hrish-hub/Resume/blob/main/weatherapp.html" class="text-accent hover:underline text-sm">
+              GitHub
+            </a>
+            <a href="https://hrishabh.pages.dev/weatherapp.html" class="text-accent hover:underline text-sm">
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
